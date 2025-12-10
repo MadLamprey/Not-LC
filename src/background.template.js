@@ -59,7 +59,7 @@ async function getNextSerialNumber() {
 
 
 async function createNotionPage(data) {
-  const { problem, timestamp, url, notes, statistics } = data;
+  const { problem, timestamp, url, notes, statistics, complexity } = data;
 
   const s_no = await getNextSerialNumber();
 
@@ -74,6 +74,9 @@ async function createNotionPage(data) {
       },
       Date: {
         date: { start: timestamp }
+      },
+      Complexity: {
+        rich_text: [{ text: { content: complexity || '' } }]
       },
       Link: {
         url

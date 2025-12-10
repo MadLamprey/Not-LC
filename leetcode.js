@@ -116,13 +116,51 @@ function showNotesPopup(submissionData) {
         margin: 0;
       }
 
-      .lc-notes-textarea {
+      .lc-notes-compdiv {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+
+        .lc-notes-comptitle {
+        font-size: 13px;
+        color: #000000;
+        font-weight: 600;
+        }
+
+        .lc-notes-comptextarea {
+        width: 100%;
+        min-height: 30px;
+        max-height: 45px;
+        font-family: inherit;
+        font-size: 11px;
+        font-weight: 400;
+        padding: 6px 8px;
+        color: #000000;
+        background: #ffffff;
+        border: 1px solid #000000;
+        box-sizing: border-box;
+        outline: none;
+        }
+      }
+
+      .lc-notes-textdiv {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+
+        .lc-notes-texttitle {
+        font-size: 13px;
+        color: #000000;
+        font-weight: 600;
+  }
+
+        .lc-notes-textarea {
         width: 100%;
         min-height: 90px;
         max-height: 180px;
         resize: vertical;
         font-family: inherit;
-        font-size: 13px;
+        font-size: 11px;
         font-weight: 400;
         padding: 6px 8px;
         color: #000000;
@@ -136,6 +174,7 @@ function showNotesPopup(submissionData) {
         border-color: #000000;
         box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5);
       }
+    }
 
       .lc-notes-buttons {
         display: flex;
@@ -214,9 +253,31 @@ function showNotesPopup(submissionData) {
   header.appendChild(subtitle);
   header.appendChild(closeBtn);
 
+  const compdiv = document.createElement('div');
+  compdiv.className = 'lc-notes-compdiv';
+
+  const comptitle = document.createElement('p');
+  comptitle.className = 'lc-notes-comptitle';
+  comptitle.textContent = 'Complexity';
+
+  const comptextarea = document.createElement('textarea');
+  comptextarea.className = 'lc-notes-comptextarea';
+
+  compdiv.appendChild(comptitle);
+  compdiv.appendChild(comptextarea);
+
+  const textdiv = document.createElement('div');
+  textdiv.className = 'lc-notes-textdiv';
+
+  const texttitle = document.createElement('p');
+  texttitle.className = 'lc-notes-texttitle';
+  texttitle.textContent = 'Notes';
+
   const textarea = document.createElement('textarea');
   textarea.className = 'lc-notes-textarea';
-  textarea.placeholder = 'Basic Idea';
+
+  textdiv.appendChild(texttitle);
+  textdiv.appendChild(textarea);
 
   const buttonRow = document.createElement('div');
   buttonRow.className = 'lc-notes-buttons';
@@ -228,7 +289,8 @@ function showNotesPopup(submissionData) {
   buttonRow.appendChild(saveBtn);
 
   modal.appendChild(header);
-  modal.appendChild(textarea);
+  modal.appendChild(compdiv);
+  modal.appendChild(textdiv);
   modal.appendChild(buttonRow);
 
   container.appendChild(modal);
@@ -244,6 +306,7 @@ function showNotesPopup(submissionData) {
   closeBtn.addEventListener('click', closeWithAnimation);
 
   saveBtn.addEventListener('click', () => {
+    const complexity = comptextarea.value || '';
     const notes = textarea.value || '';
 
     chrome.runtime.sendMessage(
@@ -251,6 +314,7 @@ function showNotesPopup(submissionData) {
         type: 'LEETCODE_SAVE_NOTION',
         payload: {
           ...submissionData,
+          complexity,
           notes
         }
       }
