@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "Not-LC",
+  "version": "1.0",
+  "permissions": [
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://leetcode.com/*",
+    "https://api.notion.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://leetcode.com/*"],
+      "js": ["leetcode.js"]
+    }
+  ]
+}
