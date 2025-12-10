@@ -41,10 +41,10 @@ All processing occurs within the browser. The only external request is directly 
 
 ## 3. Screenshots
 ### Notes Widget 
-![Notes Widget](./screenshots/notes_widget.png)
+![Notes Widget](./assets/notes_widget.png)
 
 ### Notion Entry
-![Notion Entry](./screenshots/notion_entry.png)
+![Notion Entry](./assets/notion_entry.png)
 
 ---
 
